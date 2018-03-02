@@ -54,6 +54,7 @@ public class Pokemon{
                 level+=1;
         }
 	public void print(){
+                System.out.println("ในpokemon");
 		System.out.println("Pokemon name: " + name);
  		System.out.print("        Type: ");
 		for(String type: types){

@@ -6,12 +6,13 @@ import java.io.*;
 public class CommandParser{
 	private PokemonFarm pokemonFarm;
         private Bag bag;
+        private RandomPokemon randoms;
 	private Scanner commandScanner;
 	private boolean isRunning;
-
+        private ArrayList<Pokemon> pokemonsBag;
 	public CommandParser(PokemonFarm pokemonFarm){
 		this.pokemonFarm = pokemonFarm;
-                
+                bag=new Bag();
 		commandScanner = new Scanner(System.in);
 		isRunning = false;
 	}
@@ -56,10 +57,11 @@ public class CommandParser{
 		float weight =commandScanner.nextFloat();
                 System.out.print("Pokemon stepLength: ");
 		float stepLength =commandScanner.nextFloat();
+               
                 int level=1;
                 
 		if(pokemonType.equals("Caterpie")){
-			Caterpie caterpie = new Caterpie(name, weight, stepLength,level);
+			Caterpie caterpie = new Caterpie(name, weight,stepLength,level);
 			pokemonFarm.addPokemon(caterpie);
 		}
                 else if(pokemonType.equals("Weedle")){
@@ -77,7 +79,9 @@ public class CommandParser{
 		System.out.println("==========================================");
 		System.out.println("Pokemon List");
 		System.out.println("==========================================");
+                System.out.println("ในคอมมานก่อนใช้");
 		this.pokemonFarm.list();
+                System.out.println("ในคอมมานหลังใช้");
 		System.out.println("==========================================");
 	}
 
@@ -113,13 +117,33 @@ public class CommandParser{
                 }
        }
         
-        private void catchPokemons() {
+        private void catchPokemons(){
+            
            
-             bag =new Bag();
-             bag.random();
-        
-        }
+            int i=1;
+            while(i==1){
+                randoms = new RandomPokemon();
 
+                System.out.print("What do you want find or quit ?: ");
+                String ans= this.commandScanner.next();
+                if(ans.equals("find")){
+                    this.randoms.find();
+                }
+                else if(ans.equals("quit")){
+                    
+                    int length =(this.bag).getLength();
+                   
+           
+                    for(i=0;i<length;i++){
+                        
+                        pokemonFarm.addPokemon(this.bag.getPoke(i)); 
+                    }
+               
+                    i=0;
+                }
+            }
+            
+        }
 
 
 

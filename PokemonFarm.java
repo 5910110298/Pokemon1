@@ -13,14 +13,18 @@ public class PokemonFarm {
 	}
 
 	public void list(){
-		for(Pokemon pokemon: pokemons){
+            System.out.println("ในฟามก่อน loop");
+                for(Pokemon pokemon : pokemons){
+                    System.out.println("ในฟามก่อนใช้");
 			pokemon.print();
+                        System.out.println("ในฟาม หลังใช้");
 		}
 	}
 
 	public void feed(String pokemonName){
 		if(pokemonName.equals("all")){
 			for(Pokemon pokemon: pokemons){
+                                System.out.println("loop each");
 				pokemon.eat();
 			}
 		}

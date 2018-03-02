@@ -5,79 +5,89 @@
  */
 package pokemongame;
 
-/**
- *
- * @author Acer
- */
+import java.util.Random; 
+import java.util.Scanner;
+
 public class RandomPokemon {
-    private Pokemon pokemon;
-    private Caterpie caterpie ;
-    private Weedle weedle;
-    private Wurmple wurmple;
-    float r=(float)Math.random();
-    private String name;
-    private float weight;
-    private float stepLength;
-    private int level;
+    private Scanner sc = new Scanner(System.in);
+    private Bag  bag;
+    Random rand = new Random(); 
     
-    public RandomPokemon(name,weight,stepLength,level){
+    public void find(){
         
-        this.name = name;
-        this.level =level;
-        this.stepLength=stepLength;
-        this.weight=weight;
-        if(r<0.3){
-            caterpie = new Caterpie(name, weight, stepLength,level);
-        }
-        else if(r>=0.3&&r<0.6){
-            weedle = new Weedle(name, weight, stepLength,level);
-        }
-        else {
-            wurmple = new Wurmple(name, weight, stepLength,level);   
-        }
+        String name[] = {"weedle","wurmple","caterpie"};
+        String type = name[rand.nextInt(3)];
+        System.out.println("Pokemon is "+ type);
+        
+        catchMon(type);
+        
+        
     }
     
+    private void catchMon(String type){
+        
+        int mood = rand.nextInt(10)+1;
+        int ball = selectBall();
+        int result = 0;
+        if(ball==1){
+            result = mood*8;
+        }
+        else if(ball==2){
+            result = mood*9; 
+        }
+        else if(ball==3){
+            result = mood*10; 
+        }
+        
+        if(result >= 50){
+            System.out.println("Success");
+             bag = new Bag();
+             addPokemon(type);
+             
+        }else{
+            System.out.println("Fail");
+        }
+        
+        
+    }
+    
+    private int selectBall(){
+        System.out.println("\nSelect Ball:");
+        System.out.println("Type 1 is Pokeball");
+        System.out.println("Type 2 is Greatball");
+        System.out.println("Type 3 is Ultraball");
+        int ball = sc.nextInt();
+        return ball;
+    }
+    
+    	private void addPokemon(String type){
+                //sc.nextLine();
+                System.out.print("name :");
+		String name = sc.next();
+                System.out.print("weight :");
+		float weight = sc.nextFloat();
+                System.out.print("step length :");
+		float stepLength = sc.nextFloat();
+                int level=(int)Math.random()*10;
+                
 
-    public Pokemon randomGetPokemon(){
-        if(r<0.3){
-            return caterpie;
-        }
-        else if(r>=0.3&&r<0.6){
-            return weedle;
-        }
-        else{
-            return wurmple;
-        }
-            
-        
-    }
-  
-    
-    
-    public String randomGetGene(){
-        
-        if(r<0.3){
-           
-            return "Caterpie";
-        }
-        else if(r>=0.3&&r<0.6){
-            
-            return "Weedle";
-        }
-        else {
-            
-            return "Wurmple";
-        }
-    }
-    
-    public float randomGetMood(){
-        return pokemon.getMood();
-    }
+            switch(type){
+                case "weedle":
+                    Weedle weedle = new Weedle(name, weight, stepLength,level);
+                    bag.addPokemon(weedle);
+                    break;
+                case "wurmple":
+                    Wurmple wurmple = new Wurmple(name, weight, stepLength,level);
+                    bag.addPokemon(wurmple);
+                    break;
+                case "caterpie": 
+                    Caterpie caterpie = new Caterpie(name, weight, stepLength,level);
+                    bag.addPokemon(caterpie);
+                    break;
+                default:
+                    break;
+            }
 
-    private void randomGetGene(String name, float weight, float stepLength, int level) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	}
     
-    
-  
 }
